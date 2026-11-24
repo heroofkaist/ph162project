@@ -1,4 +1,4 @@
-# Can an electron leave optical records of its own motion in a perfect crystal?
+# Can an electron trap itself by triggering atomic decay in a perfect crystal?
 
 Project for Advanced Physics II (PH162), KAIST, Fall 2026. Adil Zhiyenbayev, 20261115.
 
