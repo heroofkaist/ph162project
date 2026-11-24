@@ -215,7 +215,7 @@ A perfect record of the site would give $\log_23=1.58$ bits.
 * With $g=0$ nothing changes in time. Free hopping from one site follows the exact formula $(5+4\cos(3At/\hbar))/9$.
 * All checks are in `tests/test_model.py`.
 
-## 9. Results of the reference run
+## 9. Results of the ring
 
 | Quantity | Value |
 |---|---|
@@ -228,18 +228,66 @@ A perfect record of the site would give $\log_23=1.58$ bits.
 | Electron site if only atom 0 has decayed | 26.9%, 37.1%, 36.0% |
 | Atoms in 1s and current after 60 ns | 89%, 1.2% |
 | Atoms in 1s after 300 ns | 99.99% |
+| Long chain, 100 ns: probability within two sites of the start | 84% (free hopping: 4%) |
 | Hydrogen at 1 kV/m: quench rate and quench time | $2.74\times10^{5}\ \text{s}^{-1}$, 3.64 μs |
 | One hop with $A=1$ meV | 0.658 ps |
 | Ceiling of the quench rate | $\Gamma/2=3.1\times10^{8}\ \text{s}^{-1}$, so the clocks match only for $A\lesssim0.21$ μeV |
 
 With the unrounded gap 4.3748 μeV the full-model current at 12 ns is 21.8% instead of 21.7%.
 
-## 10. Limits of the model
+## 10. The long chain: the electron digs its own well
+
+The ring of three sites is too small to ask whether the electron stays in place, because its three atoms run out. I therefore put the same Hamiltonian on an open chain of $N$ sites and launch the electron on the central site.
+
+**Why excited neighbors raise the energy.** Hold the electron next to one excited atom. The atom is then described by the Stark matrix of section 3 with $V=\pm g$:
+
+$$ \begin{pmatrix}0&\pm g\\ \pm g&-\Delta\end{pmatrix}\quad\Longrightarrow\quad E_\pm=\tfrac12\left(-\Delta\pm\sqrt{\Delta^2+4g^2}\right). $$
+
+The two levels repel each other. The 2s-like state moves **up** by
+
+$$ E_+=\tfrac12\left(\sqrt{\Delta^2+4g^2}-\Delta\right)\approx\frac{g^2}{\Delta}=0.52\ \mu\text{eV}\quad(g=1.6,\ \Delta=4.37). $$
+
+With the mixing angle $\tan2\theta=2g/\Delta$, the 2s-like state contains the fraction $\sin^2\theta=0.097$ of 2p. It decays slowly at $\Gamma\sin^2\theta=0.060\ \text{ns}^{-1}$, which is the quench rate of section 4. The 2p-like state decays fast at $\Gamma\cos^2\theta=0.56\ \text{ns}^{-1}$.
+
+**Energy landscape.** For slow hopping the atoms follow the electron, and the energy of the electron on site $j$ is
+
+$$ E(j)=E_+\times(\text{number of excited neighbors of }j). $$
+
+An atom in 1s gives no shift, because the field cannot mix it. While all atoms are excited, every site has the energy $2E_+$ and the chain is uniform. When the two neighbors of one site have emitted, this site is lower than all others by $2E_+=1.05$ μeV. For $A=0.1$ μeV the well is ten times deeper than the hopping energy, so the electron is bound.
+
+**Each photon is a position measurement.** The jump operator $\hat L_i$ keeps only the part of the state in which atom $i$ was in 2p. This part exists only where the electron was next to atom $i$. So an emission from atom $i$ places the electron on site $i\pm1$, and a second emission from atom $i\pm2$ completes the well.
+
+**Method: quantum trajectories [8].** The joint space has $N\,3^N$ states, which is too large for a density matrix. Instead I follow single state vectors:
+
+1. Between emissions the state evolves with $\hat H_{\rm eff}=\hat H-\tfrac{i\hbar}{2}\sum_i\hat L_i^\dagger\hat L_i$, and its norm falls.
+2. When the squared norm reaches a random number $r\in(0,1)$, one atom emits. Atom $i$ is chosen with a probability proportional to its 2p population, and the state becomes $\hat L_i|\psi\rangle/\|\hat L_i|\psi\rangle\|$.
+3. The average over many trajectories reproduces the Lindblad equation of section 4.
+
+An atom in 1s is a classical record, so it leaves the state vector. I also allow at most two atoms in 2p at the same time. The code is `model/chain.py`.
+
+**Checks.**
+* On a chain of four sites the average of 1500 trajectories agrees with the exact Lindblad solution within the statistical error (largest difference 0.015).
+* Evolution without a photon is the same with at most two or at most four simultaneous 2p atoms (`tests/test_chain.py`).
+* The result does not depend on the chain length: the probability within two sites of the start after 100 ns is 80%, 81% and 84% for 11, 21 and 31 sites, with a statistical error of 2%.
+
+**Results** (31 sites, $A=0.1$ μeV, 400 trajectories, 100 ns).
+
+| Quantity after 100 ns | Full model | Emission off | Free hopping |
+|---|---|---|---|
+| Probability within two sites of the start | 84% ± 2% | 12% | 4% |
+| Rms distance from the start (sites) | 2.2 | 16 | 21 |
+
+* The electron sits between two 1s atoms with 93% probability. On the long chain the record does locate the electron.
+* On average 2.6 photons are emitted in 100 ns.
+* The trap needs the emission: with emission off no atom reaches 1s, no well forms, and the electron spreads.
+* The trap needs slow hopping. The probability within two sites after 100 ns is 95%, 84%, 49% and 18% for $A$ = 0.05, 0.1, 0.2 and 0.4 μeV.
+
+## 11. Limits of the model
 
 * The atoms emit independently. For spacings much smaller than 121.6 nm, atoms share radiation modes and emit collectively [13].
 * The field is short-ranged and has a fixed strength. A real crystal needs a screened field.
-* Nothing excites the atoms again, so each atom emits at most once.
-* Three sites are too few to show spreading or trapping. The decisive test is a long chain with the electron launched at the center.
+* Nothing excites the atoms again, so each atom emits at most once and a well stays once it is dug.
+* The long chain has 31 sites and the run lasts 100 ns. The dark region around the electron grows slowly, so longer runs must decide whether the trap is permanent. Faster hopping needs longer chains.
 
 ## References
 
