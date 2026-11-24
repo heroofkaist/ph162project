@@ -134,8 +134,12 @@ def jump(old: Sector, new: Sector, psi, atom):
     return out / np.linalg.norm(out)
 
 
-def trajectory(p: ChainParams, start, times, rng, cache=None):
-    """One quantum trajectory.  Returns site probabilities [len(times), N] and the 1s pattern [len(times), N]."""
+def trajectory(p: ChainParams, start, times, rng, cache=None, return_rho=False):
+    """One quantum trajectory.  Returns site probabilities [len(times), N] and the 1s pattern [len(times), N].
+
+    With return_rho=True it also returns the density matrix of the electron alone, rho_el [len(times), N, N],
+    obtained by tracing out the atoms.  Its average over trajectories is the electron matrix of the Lindblad equation.
+    """
     cache = cache if cache is not None else SectorCache(p)
     sector = cache[tuple(range(p.N))]
     psi = np.zeros(sector.dim, dtype=complex)
@@ -143,6 +147,7 @@ def trajectory(p: ChainParams, start, times, rng, cache=None):
     threshold = rng.random()
     probs = np.zeros((len(times), p.N))
     dead = np.zeros((len(times), p.N), dtype=bool)
+    rho = np.zeros((len(times), p.N, p.N), dtype=complex) if return_rho else None
     now = 0.0
     for it, t in enumerate(times):
         while now < t - 1e-12:
@@ -168,6 +173,11 @@ def trajectory(p: ChainParams, start, times, rng, cache=None):
         pj = sector.site_probabilities(psi)
         probs[it] = pj / pj.sum()
         dead[it] = [a not in sector.active for a in range(p.N)]
+        if return_rho:
+            m = psi.reshape(p.N, sector.nsub)
+            rho[it] = (m @ m.conj().T) / pj.sum()
+    if return_rho:
+        return probs, dead, rho
     return probs, dead
 
 

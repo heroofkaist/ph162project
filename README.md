@@ -31,6 +31,8 @@ python -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
 python run_all.py        # ring: all numbers   -> results/results.json and results/*.csv   (about 1 minute)
 python run_chain.py      # long chain          -> results/chain.json and results/chain_*.csv (about 30 minutes on two cores)
+python run_chain_coherence.py  # coherence on the long chain -> results/chain_coherence.*  (about 15 minutes)
+python validate_chain.py # trajectories against the exact solution on four sites       (about 10 minutes)
 python make_figures.py   # all figures         -> figures/*.png
 python -m pytest -q      # 17 checks of the model                                           (about 2 minutes)
 ```
@@ -46,6 +48,8 @@ Tested with Python 3.13, NumPy 2.5 and SciPy 1.18.
 | `model/atom.py` | One hydrogen atom in a static field: dipole matrix element, quench rate, its ceiling |
 | `run_all.py` | Reproduces every number and curve of the ring |
 | `run_chain.py` | Reproduces every number and curve of the long chain |
+| `run_chain_coherence.py` | Coherence of the electron on the long chain |
+| `validate_chain.py` | Checks the quantum trajectories against the exact Lindblad solution |
 | `make_figures.py` | Draws the figures from the CSV files |
 | `tests/` | Checks: physical state, known limits, two solvers, trajectories against the exact solution, reference numbers |
 | `results/` | `results.json` and the CSV files written by `run_all.py` |
@@ -58,7 +62,7 @@ Tested with Python 3.13, NumPy 2.5 and SciPy 1.18.
 
 | Question | Result |
 |---|---|
-| Q1. Coherence and transport | Ring, A = 1.0 μeV: at 12 ns the current is 21.7% of its initial value and the coherence is 0.411. With emission switched off the current keeps reviving (26% to 97%). |
+| Q1. Coherence and transport | Long chain: after 100 ns the electron keeps 84% of its probability within two sites of the start, and its coherence C stays below 0.6. Free hopping builds C = 26. On the ring the current falls to 21.7% at 12 ns. |
 | Q2. When do the clocks match? | For hydrogen at 1 kV/m the quench time is 3.64 μs, and one hop with A = 1 meV takes 0.66 ps. The quench rate can never exceed Γ/2 = 3.1 × 10⁸ s⁻¹, so the clocks match only for A below about 0.21 μeV. |
 | Q3. Do the atoms record the path? | Ring: the pattern of 1s atoms carries only 0.008 bit about the electron site. Long chain: after 100 ns the electron sits between two 1s atoms with 93% probability. |
 | Is the electron trapped? | Ring: no, the three atoms run out. Long chain (31 sites, A = 0.1 μeV): after 100 ns, 84% of the probability is still within two sites of the start. Free hopping keeps 4%, and the model with emission switched off keeps 12%. |
@@ -67,6 +71,8 @@ Tested with Python 3.13, NumPy 2.5 and SciPy 1.18.
 Common parameters: g = 1.6 μeV, Δ = 4.37 μeV, Γ = 0.625 ns⁻¹. All atoms start in 2s.
 
 ![The electron traps itself on a long chain](figures/chain_trapping.png)
+
+![Coherence on the chain](figures/chain_coherence.png)
 
 ![Scan of the hopping energy](figures/chain_scan.png)
 

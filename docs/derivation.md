@@ -266,7 +266,7 @@ An atom in 1s gives no shift, because the field cannot mix it. While all atoms a
 An atom in 1s is a classical record, so it leaves the state vector. I also allow at most two atoms in 2p at the same time. The code is `model/chain.py`.
 
 **Checks.**
-* On a chain of four sites the average of 1500 trajectories agrees with the exact Lindblad solution within the statistical error (largest difference 0.015).
+* On a chain of four sites the average of 1500 trajectories agrees with the exact Lindblad solution. The largest difference is 0.012, within 2.1 standard errors (`validate_chain.py`).
 * Evolution without a photon is the same with at most two or at most four simultaneous 2p atoms (`tests/test_chain.py`).
 * The result does not depend on the chain length: the probability within two sites of the start after 100 ns is 80%, 81% and 84% for 11, 21 and 31 sites, with a statistical error of 2%.
 
@@ -276,10 +276,12 @@ An atom in 1s is a classical record, so it leaves the state vector. I also allow
 |---|---|---|---|
 | Probability within two sites of the start | 84% ± 2% | 12% | 4% |
 | Rms distance from the start (sites) | 2.2 | 16 | 21 |
+| Coherence $C$ of the electron | 0.2 (never above 0.6; statistical floor 0.06) | 17 | 26 |
 
 * The electron sits between two 1s atoms with 93% probability. On the long chain the record does locate the electron.
 * On average 2.6 photons are emitted in 100 ns.
 * The trap needs the emission: with emission off no atom reaches 1s, no well forms, and the electron spreads.
+* The electron starts on one site, so its coherence starts at 0. A spreading wave builds coherence. In the full model every photon measures the position, so the coherence stays small (`run_chain_coherence.py`).
 * The trap needs slow hopping. The probability within two sites after 100 ns is 95%, 84%, 49% and 18% for $A$ = 0.05, 0.1, 0.2 and 0.4 μeV.
 
 ## 11. Limits of the model

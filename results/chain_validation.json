@@ -1,0 +1,8 @@
+{
+  "N": 4,
+  "A": 0.3,
+  "trajectories": 1500,
+  "max_abs_difference": 0.012336797441130531,
+  "max_difference_in_standard_errors": 2.1036836745356733,
+  "rms_difference_in_standard_errors": 0.9358392300537548
+}

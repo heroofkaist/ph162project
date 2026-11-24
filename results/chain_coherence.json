@@ -1,0 +1,17 @@
+{
+  "trajectories": 400,
+  "coherence_100ns": {
+    "full": 0.20485303131644242,
+    "statistical_floor": 0.062348352726462865,
+    "emission_off": 16.777864799617863,
+    "free": 26.287967705188773
+  },
+  "coherence_50ns": {
+    "full": 0.20547781270406448,
+    "emission_off": 9.072497837794486,
+    "free": 15.001189243584996
+  },
+  "max_coherence_full": 0.6079891517840524,
+  "time_of_max_full": 12.5,
+  "window_100ns_check": 0.8374927805564011
+}
