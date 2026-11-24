@@ -1,0 +1,114 @@
+{
+  "units": "energy in micro-eV, time in ns, rates in 1/ns",
+  "hbar": 0.6582119569,
+  "parameters": {
+    "A": 1.0,
+    "g": 1.6,
+    "delta": 4.37,
+    "gamma": 0.625,
+    "e1s": 0.0
+  },
+  "full": {
+    "coherence_12ns": 0.4110000205948487,
+    "current_12ns": 0.21711416816778234,
+    "fraction_1s_12ns": 0.38594782151544127,
+    "site_probabilities_12ns": [
+      0.33333333333333354,
+      0.3333333333333333,
+      0.3333333333333335
+    ],
+    "current_range_6_to_12ns": [
+      0.21711416816778234,
+      0.38408382011246106
+    ]
+  },
+  "record": {
+    "mutual_information_bits_12ns": 0.00822946892443092,
+    "max_mutual_information_bits": 0.045950087578601154,
+    "perfect_record_bits": 1.584962500721156,
+    "prob_at_least_one_emission": 0.7070426796279052,
+    "prob_only_atom0_decayed": 0.1124858153164828,
+    "electron_site_given_only_atom0": [
+      0.2688446000012494,
+      0.371359804805146,
+      0.35979559519360466
+    ]
+  },
+  "checks": {
+    "two_solvers_max_abs_difference": 2.8437400821141575e-13,
+    "effect_of_1s_energy_offset": 5.828670879282072e-16,
+    "current_12ns_with_exact_gap_full": 0.21765165685004595,
+    "current_12ns_with_exact_gap_emission_off": 0.42374673452090844,
+    "max_trace_error": 2.8446382278514154e-15,
+    "max_hermiticity_error": 1.3582216784369736e-10,
+    "min_eigenvalue": -1.1925443036266355e-10
+  },
+  "emission_off": {
+    "coherence_12ns": 0.49435312341250204,
+    "current_12ns": 0.4362771099292817,
+    "fraction_1s_12ns": 0.0,
+    "site_probabilities_12ns": [
+      0.333333333333333,
+      0.3333333333333334,
+      0.33333333333333315
+    ],
+    "current_range_6_to_12ns": [
+      0.25881196583301136,
+      0.9662326895649338
+    ]
+  },
+  "mixing_off": {
+    "coherence_12ns": 1.000000000000731,
+    "current_12ns": 1.0,
+    "fraction_1s_12ns": 0.0,
+    "site_probabilities_12ns": [
+      0.33333333333357745,
+      0.33333333333166937,
+      0.33333333333475357
+    ],
+    "current_range_6_to_12ns": [
+      0.9999999999999999,
+      1.0000000000000002
+    ]
+  },
+  "long_time": {
+    "fraction_1s_60ns": 0.8912943629479813,
+    "current_60ns": 0.011509237673795096,
+    "fraction_1s_300ns": 0.9999467878865532,
+    "current_300ns": 0.00570133235689455
+  },
+  "launch_site": {
+    "t0.5ns": {
+      "full": 0.6080500356569352,
+      "free": 0.26649093858923467
+    },
+    "t1.0ns": {
+      "full": 0.18306376102472782,
+      "free": 0.4871236986160118
+    },
+    "free_vs_exact_max_difference": 4.6750381343940717e-11
+  },
+  "atom": {
+    "lamb_gap_micro_eV": 4.374832531726142,
+    "dipole_length_orbital_a0": -2.999999999999999,
+    "dipole_length_fine_structure_a0": 1.7320508075688767,
+    "V_at_1kV_per_m_micro_eV": 0.0916561815491587,
+    "hbar_gamma_over_2_micro_eV": 0.2061816044391405,
+    "quench_rate_1kV_per_m_per_s": 274379.2322710499,
+    "quench_time_1kV_per_m_micro_s": 3.6445907065303467,
+    "quench_rate_exact_1kV_per_m_per_s": 274020.3148055477,
+    "hop_time_ps_for_A_1meV": 0.6582119569,
+    "rate_ratio_for_A_1meV": 1.805996914058474e-07,
+    "ceiling_rate_per_s": 313245000.0,
+    "field_where_V_equals_gap_kV_per_m": 47.73090540957953,
+    "field_for_g_1.6_micro_eV_kV_per_m": 17.456542187957712,
+    "bare_electron_field_at_1nm_V_per_m": 1439964547.842567
+  },
+  "clock_scan": {
+    "quench_rate_g_1.6": 0.0603066778411662,
+    "hopping_rate_A_0.05": 0.07596337239980637,
+    "ratio_A_0.05": 0.7938915287194375,
+    "ratio_for_50_percent_emission": 0.2623346577133927,
+    "max_difference_full_vs_held": 0.025476974900529137
+  }
+}
